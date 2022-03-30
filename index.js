@@ -6,7 +6,7 @@ const morgan = require('morgan')
 const { port, secret } = require("./config");
 const session = require("express-session");
 const app = express()
-
+const sequelize = require('./config/database')
 
 //Static Directory
 app.use(express.static(path.join(__dirname,"static")))
@@ -30,7 +30,13 @@ app.set("view engine", "ejs")
 //Defining Main layout
 app.set('layout', './layouts/base')
 
-app.get("/", (req,resp)=>{
+ app.get("/", async (req,resp)=>{
+  try {
+    await sequelize.authenticate();
+    console.log('Connection has been established successfully.');
+  } catch (error) {
+    console.error('Unable to connect to the database:', error);
+  }
     resp.render("index")
 })
 
@@ -39,3 +45,24 @@ app.get("/", (req,resp)=>{
 app.listen(port,  () =>{
     console.log("App listening in: http://localhost:" + port);
   });
+
+  /*
+para crear un modelo 
+
+npx sequelize-cli model:generate --name User --attributes name:string,username:string,email:string,birthday:date,profilePic:string,password:string 
+  
+Para crear el modelo en la base de datos
+npx sequelize-cli:migrate
+Para revertir la migracion
+npx sequelize-cli db:migrate:undo 
+
+
+Los seeders nos sirve para popular la base de datos con datos
+
+Para generar un seeder:                Nombre de la seed
+npx sequelize-cli seed:generate --name demo-user 
+
+Para Ejecutar todas las seed:
+npx sequelize-cli db:seed:all
+
+*/
