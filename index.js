@@ -1,12 +1,19 @@
 const express = require('express')
 const path = require('path')
-const ejs = require('ejs')
 const expressLayouts = require('express-ejs-layouts')
 const morgan = require('morgan')
+const flash = require('connect-flash')
 const { port, secret } = require("./config");
 const session = require("express-session");
-const app = express()
 const sequelize = require('./config/database')
+const csrf = require('csurf')
+
+
+
+const app = express()
+/*---------APP Routes Imports---------*/
+const authRoutes = require('./routes/authRoutes')
+const chatRoutes = require('./routes/chatRoutes')
 
 //Static Directory
 app.use(express.static(path.join(__dirname,"static")))
@@ -14,6 +21,8 @@ app.use(express.static(path.join(__dirname,"static")))
 //Middlewares
 app.use(morgan("dev"))
 app.use(expressLayouts)
+
+
 /*---------APP Middlewares---------*/
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); //Forms-encoded to JS objects
@@ -24,21 +33,18 @@ app.use(
     saveUninitialized: false,
   })
 );
+app.use(csrf()) //Despues de session
+app.use(flash())
 
 //Defining view Engine 
 app.set("view engine", "ejs")
 //Defining Main layout
 app.set('layout', './layouts/base')
 
- app.get("/", async (req,resp)=>{
-  try {
-    await sequelize.authenticate();
-    console.log('Connection has been established successfully.');
-  } catch (error) {
-    console.error('Unable to connect to the database:', error);
-  }
-    resp.render("index")
-})
+/*---------Routes Use---------*/
+app.use(authRoutes)
+app.use(chatRoutes)
+ 
 
 
 
