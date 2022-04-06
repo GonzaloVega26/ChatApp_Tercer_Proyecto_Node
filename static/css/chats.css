@@ -1,0 +1,57 @@
+
+  .contact-list-container{
+    /* border: 1px dashed black; */
+    overflow: auto;
+    max-height: 90vh;
+  }
+.contact-list-container .contact-container{
+    display: flex;
+    padding: 15px;
+    border: 1px dashed black;
+    
+    
+}
+
+.contact-container .avatar-photo{
+    width: 50px;
+    border-radius: 50%;
+         
+}
+
+.contact-container p{
+    padding-left: 10px;
+}
+
+
+.main-chat{
+    margin: 0px 20px;
+    display: flex;
+    flex-direction: column;
+    
+   
+}
+
+.main-chat .chat{
+   height: 74vh;
+    overflow: auto;
+}
+
+
+.main-chat h1{
+    margin: 0;
+    background-color: grey;
+}
+
+
+.main-chat .chat-form{
+    width: 90%;
+    
+    background-color: grey;
+   
+}
+
+.chat-form textarea{
+ resize: none;  
+}
+
+
