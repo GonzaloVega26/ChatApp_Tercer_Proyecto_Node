@@ -1,0 +1,32 @@
+body{
+    display: grid;
+    grid-template-rows: 10vh 100%;
+    grid-template-columns: 20% auto;
+    height: 100%;
+    overflow: hidden;
+}
+
+.navbar{
+    display: flex;
+    flex-direction: row;
+    grid-column: span 2;
+}
+
+.navbar ul{
+   list-style-type: none;
+}
+
+.navbar ul li{
+   float: left;
+ }
+
+ .navbar ul li a {
+    display: block;
+    text-align: center;
+    padding: 16px;
+    text-decoration: none;
+  }
+  
+  .navbar ul li  a:hover {
+    
+  }
