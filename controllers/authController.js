@@ -2,16 +2,15 @@ const db = require('../models/index')
 
 class AuthController{
 
-    getLandingPageView(req,res){
-        return res.render("index",{cssPath: "/css/landing.css"})
-    }
+    
     
     getLoginView(req,res){
         return res.render("login",{formCSS:true})
     }
 
     getSignUpView(req,res){
-        return res.render("signup",{formCSS:true})
+        const token = req.csrfToken()
+        return res.render("signup",{cssPath: "", csrfToken:token})
     }
 
     logOut(req,res){
@@ -46,8 +45,15 @@ class AuthController{
     async signUp(req,res){
 
         try{
-            //try intenta ejecutar codigo que posiblemente lance una excepcion
-            const newUser = await db.User.create(req.body)
+            const data = req.body
+            const newUser = await db.User.create({
+                name: data.name,
+                username: data.username,
+                mail: data.mail,
+                birthday: data.birthday,
+                password: data.password
+
+            })
             console.log(newUser)
             return res.redirect("/")
         }catch(error){
