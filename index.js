@@ -5,7 +5,8 @@ const morgan = require('morgan')
 const flash = require('connect-flash')
 const { port, secret } = require("./config");
 const session = require("express-session");
-const sequelize = require('./config/database')
+//const sequelize = require('./config/database')
+const {sequelize} = require("./models/index")
 const csrf = require('csurf')
 
 
@@ -41,14 +42,21 @@ app.set("view engine", "ejs")
 //Defining Main layout
 app.set('layout', './layouts/base')
 
+app.get("/",(req,res)=>{
+  return res.render("index",{cssPath: "/css/landing.css"})
+})
+
 /*---------Routes Use---------*/
-app.use(authRoutes)
+app.use("/api/auth",authRoutes)
 app.use(chatRoutes)
  
 
 
 
 app.listen(port,  () =>{
+  sequelize.sync({force: false}).then(()=>{
+  console.log("La db esta correcta")
+})
     console.log("App listening in: http://localhost:" + port);
   });
 

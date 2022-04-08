@@ -19,6 +19,11 @@ module.exports = {
       type: Sequelize.DataTypes.STRING,
       allowNull: false
     })
+
+    await queryInterface.addColumn("Users", "role", {
+      type: Sequelize.DataTypes.STRING,
+      allowNull: false
+    })
   },
 
   async down (queryInterface, Sequelize) {
@@ -36,5 +41,7 @@ module.exports = {
     await queryInterface.changeColumn("Users", "password", {
       type: Sequelize.DataTypes.STRING
     })
+
+    await queryInterface.removeColumn('Users', 'role')
   }
 };
