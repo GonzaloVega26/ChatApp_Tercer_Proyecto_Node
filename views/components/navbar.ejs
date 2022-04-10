@@ -1,8 +1,17 @@
 <nav class="navbar">
     <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Login</a></li>
+        <li><a href="/">Home</a></li>
+        <% if (session.loggedIn) { %>
+        <li><a href="/api/auth/logout">LogOut</a></li>
+        <li><a href="/api/auth/profile">My Profile</a></li>
+        <li><a href="/mychats">My Chats</a></li>
+       <% } else { %>
+        <li><a href="/api/auth/login">Login</a></li>
         <li><a href="/api/auth/signup">Register</a></li>
-        <li><a href="#">LogOut</a></li>
+
+        <% } %>
+        
+        
+        
     </ul>
 </nav>

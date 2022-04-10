@@ -12,7 +12,7 @@ router.post("/login",authController.logIn)
 router.get("/signup",authController.getSignUpView)
 router.post("/signup",authController.signUp)
 
-
+router.get("/profile", authController.getProfileView)
 router.get("/logout",authController.logOut)
 
 module.exports = router

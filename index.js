@@ -15,6 +15,8 @@ const app = express()
 /*---------APP Routes Imports---------*/
 const authRoutes = require('./routes/authRoutes')
 const chatRoutes = require('./routes/chatRoutes')
+const addSessionToTemplate = require('./middlewares/addSessionToTemplate')
+const db = require('./models/index')
 
 //Static Directory
 app.use(express.static(path.join(__dirname,"static")))
@@ -34,7 +36,8 @@ app.use(
     saveUninitialized: false,
   })
 );
-app.use(csrf()) //Despues de session
+app.use(addSessionToTemplate)
+//app.use(csrf()) //Despues de session
 app.use(flash())
 
 //Defining view Engine 
@@ -42,7 +45,18 @@ app.set("view engine", "ejs")
 //Defining Main layout
 app.set('layout', './layouts/base')
 
-app.get("/",(req,res)=>{
+app.get("/",async (req,res)=>{
+  const listOfChats = await db.User.findOne({
+    where:{
+      id: 1
+    },
+    include:
+    [
+      db.User.associations.idUser1,
+      db.User.associations.idUser2
+  ]
+  })
+  
   return res.render("index",{cssPath: "/css/landing.css"})
 })
 
@@ -61,7 +75,7 @@ app.listen(port,  () =>{
   });
 
   /*
-para crear un modelo 
+para crear un modelo
 
 npx sequelize-cli model:generate --name User --attributes name:string,username:string,email:string,birthday:date,profilePic:string,password:string 
   

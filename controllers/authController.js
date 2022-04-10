@@ -5,12 +5,27 @@ class AuthController{
     
     
     getLoginView(req,res){
-        return res.render("login",{formCSS:true})
+      //  const token = req.csrfToken()
+        const token =" req.csrfToken()"
+        return res.render("login",{cssPath:"", csrfToken:token})
     }
 
     getSignUpView(req,res){
-        const token = req.csrfToken()
+       //  const token = req.csrfToken()
+       const token =" req.csrfToken()"
         return res.render("signup",{cssPath: "", csrfToken:token})
+    }
+
+    async getProfileView(req,res){
+        const idUser = req.session.idUser
+        console.log(req.session)
+        const user = await db.User.findOne({
+            where: {
+                id: idUser
+            }
+        })
+        console.log(user)
+        return res.render("profile", {cssPath: "", user:user})
     }
 
     logOut(req,res){
@@ -19,13 +34,15 @@ class AuthController{
     }
 
     async logIn(req,res){
-        const csrfToken = req.csrfToken()
+        //  const token = req.csrfToken()
+        const token =" req.csrfToken()"
         const credenciales = req.body
         const userData = await db.User.findOne({
             where:{
-                email:credenciales.email
+                mail:credenciales.mail
             }
         })
+        
 
         if(userData){
             const user = userData.dataValues
@@ -37,13 +54,12 @@ class AuthController{
             }
             
         }
-                                    //Ver despues csrf token en la vista
+        
         return res.render("login",{csrf: csrfToken})
         
     }
 
     async signUp(req,res){
-
         try{
             const data = req.body
             const newUser = await db.User.create({

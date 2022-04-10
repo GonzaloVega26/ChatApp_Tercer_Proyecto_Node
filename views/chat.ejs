@@ -1,0 +1,67 @@
+
+
+
+<h1>Mensajes</h1>
+    
+<div id="messages">
+    
+</div>
+<form action="/chat/sendMessage" method="post" onsubmit="return false" >
+  
+  <input type="text" name="message" id="input-message">
+  <button id="chat-button">Send</button>
+</form>
+
+<script>
+const chatButon = document.querySelector("#chat-button")
+chatButon.addEventListener("click",async ()=>{
+    const message = document.querySelector("#input-message").value
+    const idReceiver = window.location.pathname.split("/")[2]
+    console.log(message)
+    const response = await fetch("/chat/sendMessage/"+idReceiver,{
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    mode: 'cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'application/json'
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    redirect: 'follow', // manual, *follow, error
+    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    body: JSON.stringify({message}) // body data type must match "Content-Type" header
+  }
+  
+  );
+  message = ""
+})
+
+const containerMessages = document.querySelector("#messages")
+setInterval(()=>{
+  getMessages()
+}, 1000);
+
+function getMessages(){
+  const idConversation = window.location.pathname.split("/")[2]
+  console.log(idConversation)
+  containerMessages.innerHTML = ""
+    fetch("/api/mychats/"+idConversation).then(response => response.json())
+        .then(resultado => {
+            resultado.forEach(element => {
+             
+                const  p = document.createElement("p");
+                if(element.senderId ==  '<%= session.idUser%>'){
+                  p.style.color= 'red'
+                }
+
+                p.innerText = element.content
+                containerMessages.appendChild(p)
+            });
+            
+            
+            
+            console.log(resultado)}).catch(error=>{
+            console.log(error)
+        });
+}
+</script>

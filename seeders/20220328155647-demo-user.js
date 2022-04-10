@@ -1,13 +1,13 @@
 'use strict';
 
 module.exports = {
-  up: (queryInterface, Sequelize) => {
+  up: async (queryInterface, Sequelize) => {
     
     await queryInterface.bulkInsert('Users',[
-      {name: "Gonzalo"},
-      {name: "Amorcito"},
-      {name: "Franco"},
-      {name: "Gimena"}
+      {name: "Gonzalo", username: "Gonzalo", mail: "gonzalo@mail.com", password: "1234"},
+      {name: "Amorcito", username: "Amorcito", mail: "amorcito@mail.com", password: "1234"},
+      {name: "Franco", username: "Franco", mail: "franco@mail.com", password: "1234"},
+      {name: "Gimena", username: "Gimena", mail: "gimena@mail.com", password: "1234"}
     ])
 
     await queryInterface.bulkInsert('Conversations',[
