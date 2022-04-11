@@ -1,10 +1,20 @@
-<form action="/api/auth/login" method="post">
+<div class="aside-login">
+
+</div>
+<div class="general-container">
+  <form action="/api/auth/login" method="post">
+    <h1>Login</h1>
     <!-- <input type="hidden" name="_csrf" value="<%= csrfToken %>"> -->
-    <label for="mail">Email:</label>
-    <input type="mail" name="mail">
+    <div class="form-control">
+        <input type="text"  name="mail" required />
+        <label>Email</label>
+      </div>
 
-    <label for="password">Password:</label>
-    <input type="password" name="password">
-
-    <button>Login</button>
+      <div class="form-control">
+        <input type="password"  name="password" required />
+        <label>Password</label>
+      </div>
+      <button class="custom-btn btn-3"><span>Login</span></button>
 </form>
+</div>
+<script src="/js/login.js"></script>

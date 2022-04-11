@@ -1,19 +1,28 @@
 <form action="#" method="post">
-   
+    <div class="form-control">
+        <img class="profile-picture" src="<%= user.urlPicture %>" alt="" srcset="">
+      </div>
+    <div class="form-control">
+        <input type="text" name="name" required  value=<%= user.name %> />
+        <label>Name</label>
+      </div>
+      
+      <div class="form-control">
+        <input type="text" name="username" required value=<%= user.username %>  />
+        <label>Username</label>
+      </div>
 
-    <label for="name">Name:</label>
-    <input type="text" name="name" value=<%= user.name %> >
+      <div class="form-control">
+        <input type="text"  name="mail" required value=<%= user.mail %> />
+        <label>Email</label>
+      </div>
 
-    <label for="username">Username:</label>
-    <input type="text" name="username" value=<%= user.username %> >
-
-    <label for="mail">Email:</label>
-    <input type="mail" name="mail" value=<%= user.mail %> >
-
-    <label for="birthday">Birthday:</label>
-    <input type="date" name="birthday" value=<%= user.birthday %> >
-
+      <div class="form-control">
+        <input type="date" name="birthday" required value=<%= user.birthday %> />
+       
+      </div>
+      
     
 </form>
 
-<a href="/api/chats/2">Crear chat</a>
+<script src="/js/login.js"></script>

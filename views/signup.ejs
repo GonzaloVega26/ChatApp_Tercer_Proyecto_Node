@@ -1,19 +1,47 @@
-<form action="/api/auth/signup" method="post">
-    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-    <label for="name">Name:</label>
-    <input type="text" name="name">
 
-    <label for="username">Username:</label>
-    <input type="text" name="username">
+<div class="aside-register">
+    
+</div>
+<div class="general-container">
+    <form class="form-info" action="/api/auth/signup" method="post">
+        <h1>Registration</h1>
 
-    <label for="mail">Email:</label>
-    <input type="mail" name="mail">
+        <div class="form-control">
+            <input type="text" name="name" required />
+            <label>Name</label>
+          </div>
+          
+          <div class="form-control">
+            <input type="text" name="username" required />
+            <label>Username</label>
+          </div>
 
-    <label for="birthday">Birthday:</label>
-    <input type="date" name="birthday">
+          <div class="form-control">
+            <input type="text"  name="mail" required />
+            <label>Email</label>
+          </div>
 
-    <label for="password">Password:</label>
-    <input type="password" name="password">
+          <div class="form-control">
+            <input type="date" name="birthday" required />
+           
+          </div>
+          <div class="form-control">
+            <input type="text"  name="urlPicture"  />
+            <label>URL Picture</label>
+          </div>
 
-    <button>Register</button>
-</form>
+          <div class="form-control">
+            <input type="password"  name="password" required />
+            <label>Password</label>
+          </div>
+          
+        
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        
+    
+        <button class="custom-btn btn-3"><span>Register</span></button>
+    
+    </form>
+</div>
+
+<script src="/js/login.js"></script>
