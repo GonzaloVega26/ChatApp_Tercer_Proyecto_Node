@@ -1,3 +1,12 @@
 <div class="bg-image">
-    <h1>Hola</h1>
+    <h1>Let's Chat</h1>
+    <p>Make new Friends Around The World</p>
+    <% if (session.loggedIn) { %>
+        <h2><a href="/mychats">Start Chatting!</a> </h2>
+       <% } else { %>
+        <h2><a href="/api/auth/signup">Start Here!</a></h2>
+        
+
+        <% } %>
+    
 </div>

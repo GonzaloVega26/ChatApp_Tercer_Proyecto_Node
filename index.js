@@ -15,6 +15,7 @@ const app = express()
 /*---------APP Routes Imports---------*/
 const authRoutes = require('./routes/authRoutes')
 const chatRoutes = require('./routes/chatRoutes')
+const userRoutes = require('./routes/userRoutes')
 const addSessionToTemplate = require('./middlewares/addSessionToTemplate')
 const db = require('./models/index')
 
@@ -46,16 +47,6 @@ app.set("view engine", "ejs")
 app.set('layout', './layouts/base')
 
 app.get("/",async (req,res)=>{
-  const listOfChats = await db.User.findOne({
-    where:{
-      id: 1
-    },
-    include:
-    [
-      db.User.associations.idUser1,
-      db.User.associations.idUser2
-  ]
-  })
   
   return res.render("index",{cssPath: "/css/landing.css"})
 })
@@ -63,6 +54,7 @@ app.get("/",async (req,res)=>{
 /*---------Routes Use---------*/
 app.use("/api/auth",authRoutes)
 app.use(chatRoutes)
+app.use(userRoutes)
  
 
 

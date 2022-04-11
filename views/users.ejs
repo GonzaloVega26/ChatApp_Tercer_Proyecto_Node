@@ -1,0 +1,12 @@
+<div class="list-users">
+
+    <div class="container-chats">
+        <% listOfUsers.forEach(element => { %>
+            
+         <div class="chat">
+             <img class="profile-pic" src="<%= element.urlPicture %> " alt="Profile Picture" srcset="">
+             <p><%= element.name %></p>
+            <a href="/chats/create-chat/<%= element.id %> "> Chat</a>
+         </div>
+         <% })%>
+</div>

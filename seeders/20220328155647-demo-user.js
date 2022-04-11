@@ -4,10 +4,10 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     
     await queryInterface.bulkInsert('Users',[
-      {name: "Gonzalo", username: "Gonzalo", mail: "gonzalo@mail.com", password: "1234"},
-      {name: "Amorcito", username: "Amorcito", mail: "amorcito@mail.com", password: "1234"},
-      {name: "Franco", username: "Franco", mail: "franco@mail.com", password: "1234"},
-      {name: "Gimena", username: "Gimena", mail: "gimena@mail.com", password: "1234"}
+      {name: "Gonzalo Vega", username: "Gonzalo", mail: "gonzalo@mail.com", password: "1234"},
+      {name: "María Flores", username: "Maía", mail: "maria@mail.com", password: "1234"},
+      {name: "Franco Persico", username: "Franco", mail: "franco@mail.com", password: "1234"},
+      {name: "Gimena Braga", username: "Gimena", mail: "gimena@mail.com", password: "1234"}
     ])
 
     await queryInterface.bulkInsert('Conversations',[
@@ -18,8 +18,8 @@ module.exports = {
     ])
 
     await queryInterface.bulkInsert('Messages', [
-      {content: "Hola Amorcito de parte de Gonzalo", conversationId: 1, senderId: 1},
-      {content: "Hola Gonzalo de parte de Amorcito", conversationId: 1, senderId: 2},
+      {content: "Hola María de parte de Gonzalo", conversationId: 1, senderId: 1},
+      {content: "Hola Gonzalo de parte de María", conversationId: 1, senderId: 2},
       {content: "Hola Franco de parte de Gimena ", conversationId: 2, senderId: 4},
       {content: "Hola Gime de parte de Franco", conversationId: 2, senderId: 3},
       {content: "Hola Gimena de parte de Gonzalo", conversationId: 3, senderId: 1},
