@@ -18,7 +18,10 @@ router.get("/onechat/hola", chatController.getOneChatMessages)
 
 router.get("/mychats",chatController.getChatList)
 
-router.get("/api/mychats/:id", chatController.getOneChatMessages)
+router.get("/api/mychats/:idConversation", chatController.getOneChatMessages)
 
-router.get("/mychats/:id", chatController.getChatView)
+router.get("/mychats/:idConversation/:idReceiver", chatController.getChatView)
+
+router.get("/chats/create-chat/:id", chatController.createConversation)
+
 module.exports = router

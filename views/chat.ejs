@@ -1,67 +1,109 @@
+<div class="general-container">
+  <h1>Mensajes</h1>
 
-
-
-<h1>Mensajes</h1>
-    
-<div id="messages">
-    
-</div>
-<form action="/chat/sendMessage" method="post" onsubmit="return false" >
+  <div class="container-messages">
+    <div id="messages">
   
-  <input type="text" name="message" id="input-message">
-  <button id="chat-button">Send</button>
-</form>
+    </div>
+    
+    
+  </div>
+  <form class="chat-input" action="#" method="post" onsubmit="return false">
+    
+    <input type="text" name="message" id="input-message" autocomplete="off">
+    <button id="chat-button">Send</button>
+  </form>
+  
+</div>
 
 <script>
-const chatButon = document.querySelector("#chat-button")
-chatButon.addEventListener("click",async ()=>{
-    const message = document.querySelector("#input-message").value
-    const idReceiver = window.location.pathname.split("/")[2]
-    console.log(message)
-    const response = await fetch("/chat/sendMessage/"+idReceiver,{
-        method: 'POST', // *GET, POST, PUT, DELETE, etc.
-    mode: 'cors', // no-cors, *cors, same-origin
-    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-    credentials: 'same-origin', // include, *same-origin, omit
-    headers: {
-      'Content-Type': 'application/json'
-      // 'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    redirect: 'follow', // manual, *follow, error
-    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-    body: JSON.stringify({message}) // body data type must match "Content-Type" header
+  const chatButon = document.querySelector("#chat-button")
+
+  chatButon.addEventListener("click", async () => {
+    const textContainer = document.querySelector("#input-message")
+    const message = textContainer.value
+    const pathname = window.location.pathname.split("/")
+    const idConversation = pathname[2]
+    const idReceiver = pathname[3]
+
+    // Clearing input Field
+
+    textContainer.value = ""
+    const response = await fetch("/chat/sendMessage/" + idReceiver, {
+      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+      mode: 'cors', // no-cors, *cors, same-origin
+      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: 'same-origin', // include, *same-origin, omit
+      headers: {
+        'Content-Type': 'application/json'
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      redirect: 'follow', // manual, *follow, error
+      referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+      body: JSON.stringify({
+        message: message,
+        idConversation: idConversation,
+        idReceiver: idReceiver
+      }) // body data type must match "Content-Type" header
+    });
+
+  })
+
+  const containerMessages = document.querySelector("#messages")
+  setInterval(() => {
+    getMessages()
+  }, 1000);
+
+
+  var listOfMessages = []
+
+  function getMessages() {
+
+    const pathname = window.location.pathname.split("/")
+    const idConversation = pathname[2]
+
+
+    fetch("/api/mychats/" + idConversation).then(response => response.json())
+      .then(listOfNewMessages => {
+
+        if(listOfMessages.length === 0){
+          listOfMessages = listOfNewMessages
+          firstPrint()
+        }
+        const lastElement = listOfNewMessages[listOfNewMessages.length - 1]
+        
+        if (lastElement) {
+          if (listOfMessages.filter(e => e.id === lastElement.id).length === 0) {
+            console.log("Hola")
+            listOfMessages.push(lastElement)
+            printMessages(lastElement)
+          }
+        }
+
+        console.log(listOfMessages)
+      }).catch(error => {
+        console.log(error)
+      });
   }
-  
-  );
-  message = ""
-})
+  function firstPrint(){
+    
+    listOfMessages.forEach(element=>{
+      const p = document.createElement("p");
+      if (element.senderId == '<%= session.idUser%>') {
+      p.style.color = 'red'
+    }
+    p.innerText = element.content
+    containerMessages.appendChild(p)
+    })
+  }
 
-const containerMessages = document.querySelector("#messages")
-setInterval(()=>{
-  getMessages()
-}, 1000);
+  function printMessages(element) {
+    const p = document.createElement("p");
+    if (element.senderId == '<%= session.idUser%>') {
+      p.style.color = 'red'
+    }
+    p.innerText = element.content
+    containerMessages.appendChild(p)
 
-function getMessages(){
-  const idConversation = window.location.pathname.split("/")[2]
-  console.log(idConversation)
-  containerMessages.innerHTML = ""
-    fetch("/api/mychats/"+idConversation).then(response => response.json())
-        .then(resultado => {
-            resultado.forEach(element => {
-             
-                const  p = document.createElement("p");
-                if(element.senderId ==  '<%= session.idUser%>'){
-                  p.style.color= 'red'
-                }
-
-                p.innerText = element.content
-                containerMessages.appendChild(p)
-            });
-            
-            
-            
-            console.log(resultado)}).catch(error=>{
-            console.log(error)
-        });
-}
+  }
 </script>

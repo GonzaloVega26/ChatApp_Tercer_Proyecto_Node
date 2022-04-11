@@ -2,13 +2,16 @@ const db = require("../models/index");
 class ChatController {
 
   async getOneChatMessages(req, res) {
-    const idConversation = req.params.id
-console.log(idConversation)
+
+    const idConversation = req.params.idConversation
+    
+
     const listOfMessages = await db.Message.findAll({
       where:{
         ConversationId: idConversation
       }
     })
+    
     return res.json(listOfMessages);
   }
 
@@ -30,7 +33,9 @@ console.log(idConversation)
     listOfChats.idUser1.forEach(element => {
       const objeto = {
         idConversation:element.dataValues.Conversation.dataValues.id ,
-        name: element.dataValues.name
+        name: element.dataValues.name,
+        urlPicture: element.dataValues.urlPicture,
+        idUser: element.dataValues.id
       }
       listOfValues.push(objeto)
       
@@ -39,21 +44,24 @@ console.log(idConversation)
     listOfChats.idUser2.forEach(element => {
       const objeto = {
         idConversation:element.dataValues.Conversation.dataValues.id ,
-        name: element.dataValues.name
+        name: element.dataValues.name,
+        urlPicture: element.dataValues.urlPicture
       }
+      
       listOfValues.push(objeto)
     });
 
     return res.render("mychats",{
-      cssPath: "/css/chats.css",
+      cssPath: "/css/mychats.css",
       listOfValues
     });
   }
 
 
   async getChatView(req, res) {
-    console.log(req.session)
-    const idConversation = req.params.id
+    
+    const idConversation = req.params.idConversation
+    const idReceiver = req.params.idReceiver
     
     const messages = await db.Message.findAll({
       where: {
@@ -62,8 +70,9 @@ console.log(idConversation)
     });
 
     return res.render("chat", {
-      cssPath: "",
-      messages: messages
+      cssPath: "/css/chat.css",
+      messages: messages,
+      idReceiver: idReceiver
     });
   }
 
@@ -71,11 +80,24 @@ console.log(idConversation)
     
     const result = await db.Message.create({
       content: req.body.message,
-      ConversationId: 1,
-      senderId: req.session.idUser || 1,
+      ConversationId: req.body.idConversation,
+      senderId: req.session.idUser
     });
 
-    console.log(result);
+    
+  }
+
+
+  async createConversation(req,res){
+    const idNewUser = req.params.id
+    const idOwner = req.session.idUser
+    const result = await db.Conversation.create({
+        idUser1:idOwner,
+        idUser2: idNewUser
+    })
+    const idConversation = result.dataValues.id
+    
+    return res.redirect("/mychats/"+idConversation+"/"+idNewUser)
   }
 }
 

@@ -1,7 +1,15 @@
-<div>
-    <% listOfValues.forEach(element => { %>
-     <div>
-         <a href="/mychats/<%= element.idConversation %>"> <%= element.name %> </a>
-     </div>
-    <% }) %>
+<div class="general-container">
+    <h1>List Of Chats</h1>
+    <a href="/users">Start New Chat</a>
+    <div class="container-chats">
+        <% listOfValues.forEach(element => { %>
+            <a class="chat-link" href="/mychats/<%= element.idConversation %>/<%= element.idUser %>">
+         <div class="chat">
+             <img class="profile-pic" src="<%= element.urlPicture %> " alt="Profile Picture" srcset="">
+             <p><%= element.name %></p>
+            
+         </div>
+        </a>
+        <% }) %>
+    </div>
 </div>

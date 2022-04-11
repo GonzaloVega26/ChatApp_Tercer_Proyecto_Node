@@ -1,0 +1,30 @@
+.general-container{
+    height: 100vh;
+    width: 100vw;
+    background: linear-gradient(#E9DDCE,#E3CBB8,#B69682);
+    background-repeat: no-repeat;
+    box-sizing: border-box;
+}
+.chat{
+    color: white;
+    width: 200px;
+    background-color: #B69682;
+    margin: 15px;
+    display: flex; 
+    
+}
+.profile-pic{
+    width: 50px;
+    justify-self: center;
+}
+
+.chat-link{
+    font-size: 1.5rem;
+    display: inline-block;
+    text-decoration: none;
+    height: 100%;
+}
+
+.chat:hover{
+    background-color: #33364A;
+}

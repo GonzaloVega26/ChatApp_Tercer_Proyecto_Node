@@ -1,0 +1,23 @@
+.general-container{
+    grid-column: 1/3;
+    height: 80vh;
+    
+    
+}
+
+.messages{
+    overflow: auto;
+  
+}
+.container-messages{
+    height: 90%;
+    margin-left: 50px;
+    position: relative;
+    overflow: auto;
+    display: flex;
+    flex-direction: column-reverse;
+}
+.chat-input{
+    position: absolute;
+
+}
