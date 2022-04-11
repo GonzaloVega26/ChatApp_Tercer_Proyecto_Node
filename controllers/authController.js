@@ -7,13 +7,13 @@ class AuthController{
     getLoginView(req,res){
       //  const token = req.csrfToken()
         const token =" req.csrfToken()"
-        return res.render("login",{cssPath:"", csrfToken:token})
+        return res.render("login",{cssPath:"/css/login.css", csrfToken:token})
     }
 
     getSignUpView(req,res){
        //  const token = req.csrfToken()
        const token =" req.csrfToken()"
-        return res.render("signup",{cssPath: "", csrfToken:token})
+        return res.render("signup",{cssPath: "/css/login.css", csrfToken:token})
     }
 
     async getProfileView(req,res){
@@ -25,7 +25,7 @@ class AuthController{
             }
         })
         console.log(user)
-        return res.render("profile", {cssPath: "", user:user})
+        return res.render("profile", {cssPath: "/css/login.css", user:user})
     }
 
     logOut(req,res){
@@ -67,7 +67,8 @@ class AuthController{
                 username: data.username,
                 mail: data.mail,
                 birthday: data.birthday,
-                password: data.password
+                password: data.password,
+                urlPicture: req.body.urlPicture
 
             })
             console.log(newUser)

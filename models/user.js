@@ -59,6 +59,11 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
+      urlPicture: {
+        type: DataTypes.STRING(10000) ,
+        defaultValue:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpbPpWCdbVZP5eHwbuND4LmHOUqQBjKAiT9Q&usqp=CAU'
+        
+      },
     },
     {
       sequelize,
